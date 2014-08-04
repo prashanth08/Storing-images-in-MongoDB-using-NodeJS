@@ -1,0 +1,90 @@
+<html>
+<head>
+	<title></title>
+	<style>
+	head, body {
+		margin: 0;
+		padding: 0;
+	}
+	#header {
+		background-color: #cccccc;
+		height: 50px;
+		text-align: center;
+		font-weight: bold;
+		color: white;
+	}
+
+	#content {
+		margin: 0 auto;
+		margin-top: 20px;
+	}
+
+	#image {
+		width: 400px;
+		height: 400px;
+	}
+	</style>
+</head>
+<body>
+<div id="header">My Page</div>
+<div id="data">
+<form>
+<fieldset style="width:500px;" id="content">
+	<legend>Enter here:</legend>
+	<!-- <input type=submit value="SUBMIT TO SERVER" onclick="ss()"> -->
+</fieldset>
+</form>
+</div>
+
+<script type='text/javascript'>
+function main()
+{
+	var div = document.getElementById('content');
+
+	var inputFileToLoad = document.createElement("input");
+	inputFileToLoad.type = "file";
+	inputFileToLoad.id = "inputFileToLoad";
+	div.appendChild(inputFileToLoad);
+	var buttonLoadFile = document.createElement("button");
+	buttonLoadFile.onclick = loadImageFileAsURL;
+	buttonLoadFile.textContent = "View Selected File";
+	div.appendChild(buttonLoadFile);
+
+	var br = document.createElement("br");
+	div.appendChild(br);
+
+	var submit = document.createElement("input");
+	submit.setAttribute("id", "submit");
+	submit.type = "submit";
+	div.appendChild(submit);
+
+}
+
+function loadImageFileAsURL()
+{
+	var filesSelected = document.getElementById("inputFileToLoad").files;
+	if (filesSelected.length > 0)
+	{
+		var fileToLoad = filesSelected[0];console.log(fileToLoad);
+		if (fileToLoad.type.match(".*"))
+		{
+			var fileReader = new FileReader();
+			fileReader.onload = function(fileLoadedEvent)
+			{
+				var center = document.createElement("center");
+				var imageLoaded = document.createElement("img");
+				imageLoaded.setAttribute("id", "image");
+				imageLoaded.src = fileLoadedEvent.target.result;
+				document.body.appendChild(center);
+				center.appendChild(imageLoaded);
+			};
+			fileReader.readAsDataURL(fileToLoad);
+		}
+	}
+
+	return false;
+}
+main();
+</script>
+</body>
+</html>
